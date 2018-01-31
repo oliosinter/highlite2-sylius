@@ -1,0 +1,72 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "php-app",
+      "host": {
+        "sourcePath": "/var/app/current/sylius"
+      }
+    },
+    {
+      "name": "php-fpm-ini",
+      "host": {
+        "sourcePath": "/var/app/current/docker-aws/php-fpm/php.ini"
+      }
+    },
+    {
+      "name": "nginx-conf",
+      "host": {
+        "sourcePath": "/var/app/current/docker-aws/nginx/conf.d"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "php-fpm",
+      "image": "oliosinter/sylius-php-fpm:latest",
+      "essential": true,
+      "memory": 512,
+      "mountPoints": [
+        {
+          "sourceVolume": "php-app",
+          "containerPath": "/var/www/html"
+        },
+        {
+          "sourceVolume": "php-fpm-ini",
+          "containerPath": "/usr/local/etc/php/php.ini",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "nginx",
+      "image": "nginx",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "php-fpm"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "php-app",
+          "containerPath": "/var/www/html"
+        },
+        {
+          "sourceVolume": "nginx-conf",
+          "containerPath": "/etc/nginx/conf.d",
+          "readOnly": true
+        },
+        {
+          "sourceVolume": "awseb-logs-nginx",
+          "containerPath": "/var/log/nginx"
+        }
+      ]
+    }
+  ]
+}

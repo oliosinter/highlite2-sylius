@@ -1,0 +1,12 @@
+# Basic development crap
+.idea
+.DS_Store
+Thumbs.db
+
+# Build artefacts
+artefacts
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
