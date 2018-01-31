@@ -1,4 +1,4 @@
-FROM oliosinter/sylius-php-fpm:latest
+FROM oliosinter/sylius-php-fpm:1.0.0
 
 # Coping project files
 COPY sylius .

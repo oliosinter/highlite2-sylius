@@ -23,7 +23,7 @@
   "containerDefinitions": [
     {
       "name": "php-fpm",
-      "image": "oliosinter/sylius-php-fpm:latest",
+      "image": "oliosinter/sylius-php-fpm:1.0.0",
       "essential": true,
       "memory": 512,
       "mountPoints": [
