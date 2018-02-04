@@ -12,6 +12,12 @@
       "host": {
         "sourcePath": "/var/app/current/docker-aws/nginx/conf.d"
       }
+    },
+    {
+      "name": "highlite2-media",
+      "host": {
+        "sourcePath": "/highlite2-media"
+      }
     }
   ],
   "containerDefinitions": [
@@ -24,6 +30,10 @@
         {
           "sourceVolume": "php-app",
           "containerPath": "/var/www/html"
+        },
+        {
+          "sourceVolume": "highlite2-media",
+          "containerPath": "/var/www/html/web/media"
         }
       ]
     },
@@ -45,6 +55,10 @@
         {
           "sourceVolume": "php-app",
           "containerPath": "/var/www/html"
+        },
+        {
+          "sourceVolume": "highlite2-media",
+          "containerPath": "/var/www/html/web/media"
         },
         {
           "sourceVolume": "nginx-conf",
