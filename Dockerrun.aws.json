@@ -8,12 +8,6 @@
       }
     },
     {
-      "name": "php-fpm-ini",
-      "host": {
-        "sourcePath": "/var/app/current/docker-aws/php-fpm/php.ini"
-      }
-    },
-    {
       "name": "nginx-conf",
       "host": {
         "sourcePath": "/var/app/current/docker-aws/nginx/conf.d"
@@ -30,11 +24,6 @@
         {
           "sourceVolume": "php-app",
           "containerPath": "/var/www/html"
-        },
-        {
-          "sourceVolume": "php-fpm-ini",
-          "containerPath": "/usr/local/etc/php/php.ini",
-          "readOnly": true
         }
       ]
     },
