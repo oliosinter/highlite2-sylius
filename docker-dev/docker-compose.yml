@@ -30,8 +30,8 @@ services:
     links:
       - sylius-mysql
     environment:
-      SYMFONY_ENV: "dev"
-      SYLIUS_APP_DEV_PERMITTED: 1
+      SYMFONY_ENV: "staging"
+#      SYLIUS_APP_DEV_PERMITTED: 1
       SYLIUS_DATABASE_HOST: "sylius-mysql"
       SYLIUS_DATABASE_NAME: "sylius"
       SYLIUS_DATABASE_PASSWORD: "sylius"
@@ -58,6 +58,7 @@ services:
       - "8888:80"
     volumes:
       - codebase:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
     links:
       - sylius-php-fpm
 

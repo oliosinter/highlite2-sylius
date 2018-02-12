@@ -6,4 +6,4 @@ RUN mkdir -p /var/www/html \
     && chown -R www-data:www-data /var/www/html
 
 # Coping nginx configuration
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+#COPY nginx/default.conf /etc/nginx/conf.d/default.conf
