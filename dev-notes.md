@@ -17,3 +17,6 @@
 
 ##### Find containers by image id
 `docker ps -f ancestor=6d1b8249c66a`
+
+##### Find containers by name
+`docker ps -a -f name=highlite2build_release`

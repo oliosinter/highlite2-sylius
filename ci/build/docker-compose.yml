@@ -1,0 +1,22 @@
+version: '2'
+
+volumes:
+
+  highlite2-sylius-composer-cache:
+    external: true
+
+  highlite2-sylius-node-modules:
+    external: true
+
+services:
+
+  builder:
+    build:
+      context: ../../
+      dockerfile: ci/build/Dockerfile
+    volumes:
+      - highlite2-sylius-composer-cache:/var/www/.composer
+      - highlite2-sylius-node-modules:/var/www/html/node_modules
+    entrypoint: ["release.sh"]
+    environment:
+      SYMFONY_ENV: "prod"
