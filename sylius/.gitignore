@@ -23,3 +23,5 @@
 /behat.yml
 /phpunit.xml
 /phpspec.yml
+
+/app/Resources/_SyliusShopBundle

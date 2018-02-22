@@ -1,0 +1,5 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block content %}
+    {{ render(url('sylius_shop_partial_taxon_index_by_code', {'code': 'category', 'template': '@SyliusShop/Taxon/_gridMenu.html.twig'})) }}
+{% endblock %}

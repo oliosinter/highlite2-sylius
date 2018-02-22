@@ -1,0 +1,54 @@
+{% macro item(taxon) %}
+    <div class="ui link list">
+        <h4 class="black">
+            <a href="{{ path('sylius_shop_product_index', {'slug': taxon.slug, '_locale': taxon.translation.locale}) }}"
+               class="item active">{{ taxon.name }}</a>
+        </h4>
+        {% if taxon.children|length > 0 %}
+            {% for childTaxon in taxon.children %}
+                <a href="{{ path('sylius_shop_product_index', {'slug': childTaxon.slug, '_locale': childTaxon.translation.locale}) }}"
+                   class="item">{{ childTaxon.name }}</a>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% import _self as macros %}
+
+<h2 class="ui horizontal section divider header">
+    Каталог оборудования
+</h2>
+<div class="ui segment">
+    <div class="ui divided grid">
+        {% if taxons|length > 0 %}
+            <div class="four column row">
+                <div class="column">
+                    {% if taxons|length > 0 %}
+                        {{ macros.item(taxons[0]) }}
+                    {% endif %}
+                </div>
+                <div class="column">
+                    {% if taxons|length > 1 %}
+                        {% for taxon in taxons|slice(1, 3) %}
+                            {{ macros.item(taxon) }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="column">
+                    {% if taxons|length > 4 %}
+                        {% for taxon in taxons|slice(4, 3) %}
+                            {{ macros.item(taxon) }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="column">
+                    {% if taxons|length > 7 %}
+                        {% for taxon in taxons|slice(7, 3) %}
+                            {{ macros.item(taxon) }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
