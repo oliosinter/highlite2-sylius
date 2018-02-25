@@ -5,9 +5,6 @@ volumes:
   highlite2-sylius-composer-cache:
     external: true
 
-  highlite2-sylius-vendor:
-      external: true
-
   highlite2-sylius-node-modules:
     external: true
 

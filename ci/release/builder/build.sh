@@ -1,12 +1,12 @@
 #!/bin/bash
 
-composer install --no-dev --prefer-dist --no-autoloader --no-scripts
+composer install --no-dev --prefer-dist
 
 yarn install
 yarn run gulp
 
-tar -cf ../vendor.tar vendor/
-tar -cf ../assets.tar web/assets/
-tar -cf ../bundles.tar web/bundles/
+tar --mtime='1970-01-01' -cf ../vendor.tar vendor/
+tar --mtime='1970-01-01' -cf ../assets.tar web/assets/
+tar --mtime='1970-01-01' -cf ../bundles.tar web/bundles/
 
 exec $@

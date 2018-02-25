@@ -71,6 +71,7 @@
         "classmap": ["app/AppKernel.php", "app/AppCache.php"]
     },
     "config": {
+        "autoloader-suffix": "Highlite2Sylius",
         "bin-dir": "bin"
     },
     "extra": {

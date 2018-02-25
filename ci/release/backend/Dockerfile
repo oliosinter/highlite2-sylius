@@ -12,7 +12,10 @@ COPY sylius .
 
 # Creating directories and changing rights
 RUN mkdir -p web/media \
-    && chown -R www-data:www-data .
+    && chown -R www-data:www-data web/media \
+    && mkdir -p var/cache \
+    && mkdir -p var/logs \
+    && chown -R www-data:www-data var
 
 # Labels
 LABEL application=highlite2-sylius
