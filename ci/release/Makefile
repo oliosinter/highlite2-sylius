@@ -3,7 +3,7 @@ ORG_NAME ?= highlite2
 # Use these settings to specify a custom Docker registry
 DOCKER_REGISTRY ?= docker.io
 
-RELEASE_PROJECT := $(PROJECT_NAME)-build
+RELEASE_PROJECT := $(PROJECT_NAME)-release
 RELEASE_COMPOSE_FILE := ci/release/docker-compose.yml
 
 # SERVICES PROPERTIES

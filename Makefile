@@ -13,4 +13,6 @@ CHECK := @bash -c '\
 # INCLUDE CI TARGETS
 # -----------------------------------------------------------------------------
 include ci/release/Makefile
+include ci/prod/Makefile
+
 include docker-dev/Makefile

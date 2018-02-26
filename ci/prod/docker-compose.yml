@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+
+  sylius-backend:
+    image: highlite2syliusrelease_backend:latest
+    links:
+      - mysql
+    environment:
+      SYMFONY_ENV: "prod"
+      SYLIUS_DATABASE_HOST: "mysql"
+      SYLIUS_DATABASE_NAME: "sylius"
+      SYLIUS_DATABASE_PASSWORD: "sylius"
+      SYLIUS_DATABASE_USER: "sylius"
+
+  sylius-static:
+    image: highlite2syliusrelease_static:latest
+
+  proxy:
+    build:
+      context: .
+      dockerfile: proxy/Dockerfile
+    ports:
+      - "80:80"
+
+  mysql-agent:
+    image: oliosinter/ansible-probe:latest
+    links:
+      - mysql
+    environment:
+      PROBE_HOST: "mysql"
+      PROBE_PORT: "3306"
+      PROBE_TIMEOUT: 60
+
+  mysql:
+    image: mysql:5.7
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "sylius"
+      MYSQL_DATABASE: "sylius"
+      MYSQL_USER: "sylius"
+      MYSQL_PASSWORD: "sylius"
