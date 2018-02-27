@@ -18,12 +18,12 @@ services:
       - highlite2-sylius-composer-cache:/var/www/.composer
       - highlite2-sylius-node-modules:/var/www/html/node_modules
 
-  backend:
+  sylius-backend:
     build:
       context: ../../
       dockerfile: ci/release/backend/Dockerfile
 
-  static:
+  sylius-static:
     build:
       context: ../../
       dockerfile: ci/release/static/Dockerfile
