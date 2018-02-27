@@ -13,6 +13,7 @@ stop-proxy:
 
 ci-prod-run:
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) run --rm mysql-agent
+	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) run --rm sylius-backend php bin/console doctrine:migrations:migrate -n
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) up --build -d sylius-backend
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) up --build -d sylius-static
 #ifeq ($(PROD_PROXY_CONTAINER_ID), )

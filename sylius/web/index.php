@@ -1,10 +1,5 @@
 <?php
 
-echo '<pre>';
-var_dump($_SERVER);
-echo '</pre>';
-die;
-
 $env = getenv('SYMFONY_ENV');
 
 if ($env == 'dev') {

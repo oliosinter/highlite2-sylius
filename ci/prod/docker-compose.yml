@@ -3,18 +3,19 @@ version: '2'
 services:
 
   sylius-backend:
-    image: highlite2syliusrelease_backend:latest
+    image: highlite2syliusrelease_sylius-backend:latest
     links:
       - mysql
     environment:
-      SYMFONY_ENV: "prod"
+      SYMFONY_ENV: "dev"
+      SYLIUS_APP_DEV_PERMITTED: 1
       SYLIUS_DATABASE_HOST: "mysql"
       SYLIUS_DATABASE_NAME: "sylius"
       SYLIUS_DATABASE_PASSWORD: "sylius"
       SYLIUS_DATABASE_USER: "sylius"
 
   sylius-static:
-    image: highlite2syliusrelease_static:latest
+    image: highlite2syliusrelease_sylius-static:latest
 
   proxy:
     build:
