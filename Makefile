@@ -15,4 +15,4 @@ CHECK := @bash -c '\
 include ci/release/Makefile
 include ci/prod/Makefile
 
-include docker-dev/Makefile
+include dev/Makefile

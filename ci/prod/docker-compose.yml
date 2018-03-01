@@ -25,7 +25,7 @@ services:
       - "80:80"
 
   mysql-agent:
-    image: oliosinter/ansible-probe:latest
+    image: oliosinter/ansible-probe:1.0.0
     links:
       - mysql
     environment:

@@ -9,7 +9,7 @@ RUN chmod +x /usr/local/bin/build.sh
 # script from www-data user and yarn will attempt to create additional files in a www-data
 # homedir (/var/www). Thats why we are granting permissions to /var/www instead of just
 # giving permissions for /var/www/html
-RUN mkdir -p /var/www/html \
-    && chown -R www-data:www-data /var/www
+RUN mkdir -p /var/www/html && \
+    chown -R www-data:www-data /var/www
 
 WORKDIR /var/www/html

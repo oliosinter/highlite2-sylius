@@ -23,7 +23,7 @@ services:
   sylius-php-fpm:
     build:
       context: ../
-      dockerfile: docker-dev/php-fpm/Dockerfile
+      dockerfile: dev/php-fpm/Dockerfile
     volumes:
       - composer-cache:/cache/composer
       - codebase:/var/www/html
@@ -70,13 +70,9 @@ services:
       - codebase:/var/www/html
 
   mysql-agent:
-    build:
-      context: .
-      dockerfile: ansible-playbook/Dockerfile
+    image: oliosinter/ansible-probe:1.0.0
     links:
       - sylius-mysql
-    volumes:
-      - ./ansible-playbook/probe.yml:/ansible/probe.yml
     environment:
       PROBE_HOST: "sylius-mysql"
       PROBE_PORT: "3306"
