@@ -1,4 +1,4 @@
-FROM oliosinter/sylius-php-fpm:1.0.0
+FROM oliosinter/sylius-php-fpm:7.1-fpm
 
 # Installing nodejs and yarn to build frontend assets
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \

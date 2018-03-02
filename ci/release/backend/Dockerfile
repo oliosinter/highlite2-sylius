@@ -1,4 +1,4 @@
-FROM oliosinter/sylius-php-fpm:1.0.0
+FROM oliosinter/sylius-php-fpm:7.1-fpm
 
 # Copying artefacts
 COPY ci/release/artefacts/vendor.tar /var/www
