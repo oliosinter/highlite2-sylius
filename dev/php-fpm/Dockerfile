@@ -1,5 +1,21 @@
 FROM oliosinter/sylius-php-fpm:1.0.0
 
+# Memcached Setup
+# Required libraries
+RUN apt-get update && \
+    apt-get install libmemcached-dev libmsgpack-dev libmsgpackc2 -y
+# Cloninig and building
+RUN cd /tmp && \
+    git clone --depth 1 https://github.com/php-memcached-dev/php-memcached.git && \
+    cd php-memcached && \
+    phpize && \
+    ./configure && \
+    make && \
+    mv modules/ /usr/local/memcached/
+
+RUN echo 'extension=/usr/local/memcached/memcached.so' | \
+    tee /usr/local/etc/php/conf.d/memcached.ini
+
 # Coping project files
 COPY sylius .
 

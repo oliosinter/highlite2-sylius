@@ -1,8 +1,8 @@
-DEV_PROJECT := highlite2-dev
+DEV_PROJECT := $(PROJECT_NAME)-dev
 DEV_COMPOSE_FILE := dev/docker-compose.yml
 
 .PHONY: dev-build
-dev-build: dev-remove
+dev-build: dev-clean
 	docker volume create --name composer-cache
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build mysql-agent
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build --pull sylius-php-fpm
@@ -19,7 +19,15 @@ dev-build: dev-remove
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up -d sylius-nginx
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up -d sftp
 
-.PHONY: dev-startdev
+.PHONY: dev-restart
+dev-restart:
+	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build --pull sylius-php-fpm
+	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build sylius-nginx
+	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build sftp
+	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up -d sylius-nginx
+	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up -d sftp
+
+.PHONY: dev-start
 dev-start:
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up -d sylius-nginx
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up -d sftp
@@ -28,8 +36,8 @@ dev-start:
 dev-stop:
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) stop
 
-.PHONY: dev-remove
-dev-remove:
+.PHONY: dev-clean
+dev-clean:
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) down -v
 
 .PHONY: dev-bash-frontend
@@ -38,4 +46,4 @@ dev-bash-frontend:
 
 .PHONY: dev-bash-php
 dev-bash-php:
-	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) run --rm -u www-data sylius-php-fpm bash
+	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) run --rm sylius-php-fpm bash

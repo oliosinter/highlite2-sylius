@@ -29,6 +29,7 @@ services:
       - codebase:/var/www/html
     links:
       - sylius-mysql
+      - sylius-memcached
     environment:
       SYMFONY_ENV: "dev"
       SYLIUS_APP_DEV_PERMITTED: 1
@@ -36,6 +37,8 @@ services:
       SYLIUS_DATABASE_NAME: "sylius"
       SYLIUS_DATABASE_PASSWORD: "sylius"
       SYLIUS_DATABASE_USER: "sylius"
+      SYLIUS_MEMCACHED_HOST: "sylius-memcached"
+      SYLIUS_MEMCACHED_PORT: "11211"
 
   sylius-mysql:
     image: mysql:5.7
@@ -49,6 +52,11 @@ services:
       MYSQL_DATABASE: "sylius"
       MYSQL_USER: "sylius"
       MYSQL_PASSWORD: "sylius"
+
+  sylius-memcached:
+    image: memcached:1.5
+    ports:
+      - "11211"
 
   sylius-nginx:
     build:

@@ -1,4 +1,4 @@
-PROD_PROJECT := $(PROJECT_NAME)-prod
+PROD_PROJECT := $(PROJECT_NAME)-ci-prod
 PROD_COMPOSE_FILE := ci/prod/docker-compose.yml
 
 #PROD_PROXY_CONTAINER_ID = $(shell docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) ps -q proxy)
