@@ -20,7 +20,8 @@
     "yargs": "^6.4.0"
   },
   "scripts": {
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "rev": "gulp rev"
   },
   "repository": {
     "type": "git",

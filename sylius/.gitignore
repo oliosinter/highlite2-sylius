@@ -1,5 +1,6 @@
 /.php_cs.cache
 
+/app/rev-manifest.json
 /app/config/*.local.yml
 /var/*
 !/var/.gitkeep
