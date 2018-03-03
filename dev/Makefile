@@ -40,8 +40,8 @@ dev-stop:
 dev-clean:
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) down -v
 
-.PHONY: dev-bash-frontend
-dev-bash-frontend:
+.PHONY: dev-bash-node
+dev-bash-node:
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) run --rm -u www-data frontend bash
 
 .PHONY: dev-bash-php
