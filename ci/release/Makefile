@@ -35,6 +35,7 @@ ci-release-build:
 	docker cp $$(docker-compose -p $(RELEASE_PROJECT) -f $(RELEASE_COMPOSE_FILE) ps -q builder):/var/www/vendor.tar ci/release/artefacts
 	docker cp $$(docker-compose -p $(RELEASE_PROJECT) -f $(RELEASE_COMPOSE_FILE) ps -q builder):/var/www/assets.tar ci/release/artefacts
 	docker cp $$(docker-compose -p $(RELEASE_PROJECT) -f $(RELEASE_COMPOSE_FILE) ps -q builder):/var/www/bundles.tar ci/release/artefacts
+	docker cp $$(docker-compose -p $(RELEASE_PROJECT) -f $(RELEASE_COMPOSE_FILE) ps -q builder):/var/www/html/app/rev-manifest.json ci/release/artefacts
 	docker-compose -p $(RELEASE_PROJECT) -f $(RELEASE_COMPOSE_FILE) up --build -d $(RELEASE_BACKEND_REPO_NAME)
 	docker-compose -p $(RELEASE_PROJECT) -f $(RELEASE_COMPOSE_FILE) up --build -d $(RELEASE_STATIC_REPO_NAME)
 

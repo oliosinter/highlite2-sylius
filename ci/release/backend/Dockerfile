@@ -10,6 +10,8 @@ RUN tar -xf /var/www/vendor.tar \
 # Copying the source code
 COPY sylius .
 
+COPY ci/release/artefacts/rev-manifest.json /var/www/html/app
+
 # Creating directories and changing rights
 RUN mkdir -p web/media \
     && chown -R www-data:www-data web/media \

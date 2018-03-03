@@ -3,9 +3,10 @@ version: '2'
 services:
 
   sylius-backend:
-    image: highlite2syliusrelease_sylius-backend:latest
+    image: highlite2syliuscirelease_sylius-backend:latest
     links:
       - mysql
+      - memcached
     environment:
       SYMFONY_ENV: "dev"
       SYLIUS_APP_DEV_PERMITTED: 1
@@ -13,9 +14,11 @@ services:
       SYLIUS_DATABASE_NAME: "sylius"
       SYLIUS_DATABASE_PASSWORD: "sylius"
       SYLIUS_DATABASE_USER: "sylius"
+      SYLIUS_MEMCACHED_HOST: "memcached"
+      SYLIUS_MEMCACHED_PORT: "11211"
 
   sylius-static:
-    image: highlite2syliusrelease_sylius-static:latest
+    image: highlite2syliuscirelease_sylius-static:latest
 
   proxy:
     build:
@@ -45,3 +48,8 @@ services:
       MYSQL_DATABASE: "sylius"
       MYSQL_USER: "sylius"
       MYSQL_PASSWORD: "sylius"
+
+  memcached:
+    image: memcached:1.5
+    ports:
+      - "11211"
