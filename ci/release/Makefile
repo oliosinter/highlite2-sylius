@@ -2,28 +2,28 @@ ORG_NAME ?= highlite2
 
 # Use these settings to specify a custom Docker registry
 DOCKER_REGISTRY ?= docker.io
+# WARNING: Set DOCKER_REGISTRY_AUTH to empty for Docker Hub
+# Set DOCKER_REGISTRY_AUTH to auth endpoint for private Docker registry
+DOCKER_REGISTRY_AUTH ?=
 
 RELEASE_PROJECT := $(PROJECT_NAME)-ci-release
 RELEASE_COMPOSE_FILE := ci/release/docker-compose.yml
 
-# SERVICES PROPERTIES
-# -----------------------------------------------------------------------------
+# Backend service properties
 RELEASE_BACKEND_REPO_NAME := sylius-backend
 RELEASE_BACKEND_CONTAINER_ID := $$(docker-compose -p $(RELEASE_PROJECT) -f $(RELEASE_COMPOSE_FILE) ps -q $(RELEASE_BACKEND_REPO_NAME))
 RELEASE_BACKEND_IMAGE_ID := $$(docker inspect -f '{{ .Image }}' $(RELEASE_BACKEND_CONTAINER_ID))
+# Change to  $(DOCKER_REGISTRY)/$(ORG_NAME)/$(REPO_NAME)[^[:space:]|\$$]* for provite docker registry
+RELEASE_BACKEND_REPO_FILTER := $(ORG_NAME)/$(RELEASE_BACKEND_REPO_NAME)[^[:space:]|\$$]*
+RELEASE_BACKEND_REPO_EXPR := $$(docker inspect -f '{{range .RepoTags}}{{.}} {{end}}' $(RELEASE_BACKEND_IMAGE_ID) | grep -oh "$(RELEASE_BACKEND_REPO_FILTER)" | xargs)
 
+# Static service properties
 RELEASE_STATIC_REPO_NAME := sylius-static
 RELEASE_STATIC_CONTAINER_ID := $$(docker-compose -p $(RELEASE_PROJECT) -f $(RELEASE_COMPOSE_FILE) ps -q $(RELEASE_STATIC_REPO_NAME))
 RELEASE_STATIC_IMAGE_ID := $$(docker inspect -f '{{ .Image }}' $(RELEASE_STATIC_CONTAINER_ID))
-
-# BUILD TAGS PROPERTIES
-# -----------------------------------------------------------------------------
-# Build tag expression - can be used to evaulate a shell expression at runtime
-BUILD_TAG_EXPRESSION ?= date -u +%Y%m%d%H%M%S
-# Execute shell expression
-BUILD_EXPRESSION := $(shell $(BUILD_TAG_EXPRESSION))
-# Build tag - defaults to BUILD_EXPRESSION if not defined
-BUILD_TAG ?= $(BUILD_EXPRESSION)
+# Change to  $(DOCKER_REGISTRY)/$(ORG_NAME)/$(REPO_NAME)[^[:space:]|\$$]* for provite docker registry
+RELEASE_STATIC_REPO_FILTER := $(ORG_NAME)/$(RELEASE_STATIC_REPO_NAME)[^[:space:]|\$$]*
+RELEASE_STATIC_REPO_EXPR := $$(docker inspect -f '{{range .RepoTags}}{{.}} {{end}}' $(RELEASE_STATIC_IMAGE_ID) | grep -oh "$(RELEASE_STATIC_REPO_FILTER)" | xargs)
 
 .PHONY: ci-release-build
 ci-release-build:
@@ -50,19 +50,18 @@ ci-release-tag:
 	$(foreach tag,$(TAG_ARGS), docker tag $(RELEASE_BACKEND_IMAGE_ID) $(DOCKER_REGISTRY)/$(ORG_NAME)/$(RELEASE_BACKEND_REPO_NAME):$(tag);)
 	$(foreach tag,$(TAG_ARGS), docker tag $(RELEASE_STATIC_IMAGE_ID) $(DOCKER_REGISTRY)/$(ORG_NAME)/$(RELEASE_STATIC_REPO_NAME):$(tag);)
 
-.PHONY: ci-release-buildtag
-ci-release-buildtag:
-	$(foreach tag,$(BUILDTAG_ARGS), docker tag $(RELEASE_BACKEND_IMAGE_ID) $(DOCKER_REGISTRY)/$(ORG_NAME)/$(RELEASE_BACKEND_REPO_NAME):$(tag).$(BUILD_TAG);)
-	$(foreach tag,$(BUILDTAG_ARGS), docker tag $(RELEASE_STATIC_IMAGE_ID) $(DOCKER_REGISTRY)/$(ORG_NAME)/$(RELEASE_STATIC_REPO_NAME):$(tag).$(BUILD_TAG);)
+.PHONY: ci-release-login
+ci-release-login:
+	docker login -u $$DOCKER_USER -p $$DOCKER_PASSWORD $$DOCKER_REGISTRY_AUTH
 
-# Extract build tag arguments
-ifeq (ci-release-buildtag,$(firstword $(MAKECMDGOALS)))
-  BUILDTAG_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-  ifeq ($(BUILDTAG_ARGS),)
-    $(error You must specify a tag)
-  endif
-  $(eval $(BUILDTAG_ARGS):;@:)
-endif
+.PHONY: ci-release-logout
+ci-release-logout:
+	docker logout
+
+.PHONY: ci-release-publish
+ci-release-publish:
+	$(foreach tag,$(shell echo $(RELEASE_BACKEND_REPO_EXPR)), docker push $(tag);)
+	$(foreach tag,$(shell echo $(RELEASE_STATIC_REPO_EXPR)), docker push $(tag);)
 
 # Extract tag arguments
 ifeq (ci-release-tag,$(firstword $(MAKECMDGOALS)))
