@@ -3,7 +3,7 @@ version: '2'
 services:
 
   sylius-backend:
-    image: highlite2syliuscirelease_sylius-backend:latest
+    image: "highlite2/sylius-backend:${APPLICATION_DEPLOY_VERSION}"
     links:
       - mysql
       - memcached
@@ -18,7 +18,7 @@ services:
       SYLIUS_MEMCACHED_PORT: "11211"
 
   sylius-static:
-    image: highlite2syliuscirelease_sylius-static:latest
+    image: "highlite2/sylius-static:${APPLICATION_DEPLOY_VERSION}"
 
   proxy:
     build:
