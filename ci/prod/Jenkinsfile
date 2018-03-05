@@ -1,7 +1,9 @@
 node {
     checkout scm
 
-    withEnv(["APPLICATION_DEPLOY_VERSION=${APPLICATION_DEPLOY_VERSION}"]) {
-        sh 'make ci-prod-run'
+    stage ('Application deploy') {
+        withEnv(["APPLICATION_DEPLOY_VERSION=${APPLICATION_DEPLOY_VERSION}"]) {
+            sh 'make ci-prod-run'
+        }
     }
 }
