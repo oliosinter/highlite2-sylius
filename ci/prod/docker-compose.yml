@@ -1,5 +1,13 @@
 version: '2'
 
+volumes:
+
+  highlite2-sylius-media:
+    external: true
+
+  highlite2-sylius-mysql:
+    external: true
+
 services:
 
   sylius-backend:
@@ -7,6 +15,8 @@ services:
     links:
       - mysql
       - memcached
+    volumes:
+      - highlite2-sylius-media:/var/www/html/web/media
     environment:
       SYMFONY_ENV: "${SYLIUS_ENV}"
       SYLIUS_DATABASE_HOST: "mysql"
@@ -18,6 +28,8 @@ services:
 
   sylius-static:
     image: "highlite2/sylius-static:${SYLIUS_DEPLOY_VERSION}"
+    volumes:
+      - highlite2-sylius-media:/var/www/html/web/media
 
   proxy:
     build:
@@ -43,7 +55,7 @@ services:
     ports:
       - "3306"
     volumes:
-      - ${MYSQL_HOST_VOLUME_PATH}:/var/lib/mysql
+      - highlite2-sylius-mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       MYSQL_DATABASE: "${MYSQL_DATABASE_NAME}"

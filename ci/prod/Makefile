@@ -5,6 +5,8 @@ PROD_MYSQL_CONTAINER_ID = $(shell docker-compose -p $(PROD_PROJECT) -f $(PROD_CO
 
 .PHONY: ci-prod-run
 ci-prod-run:
+	docker volume create --name highlite2-sylius-media
+	docker volume create --name highlite2-sylius-mysql
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) run --rm mysql-agent
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) run --rm sylius-backend php bin/console doctrine:migrations:migrate -n
 # Initial project setup. Need to run this script only once.
