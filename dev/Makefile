@@ -46,4 +46,4 @@ dev-bash-node:
 
 .PHONY: dev-bash-php
 dev-bash-php:
-	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) run --rm sylius-php-fpm bash
+	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) run --rm -u www-data sylius-php-fpm bash
