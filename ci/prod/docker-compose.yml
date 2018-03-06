@@ -42,6 +42,8 @@ services:
       - --collation-server=utf8_general_ci
     ports:
       - "3306"
+    volumes:
+      - ${MYSQL_HOST_VOLUME_PATH}:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       MYSQL_DATABASE: "${MYSQL_DATABASE_NAME}"
