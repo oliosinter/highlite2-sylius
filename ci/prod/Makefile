@@ -13,6 +13,7 @@ ci-prod-run:
 ifeq ($(PROD_MYSQL_CONTAINER_ID), )
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) run --rm sylius-backend php bin/console sylius:install:setup -n
 endif
+#	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) run --rm sylius-backend php bin/console cache:warmup
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) up --build -d sylius-backend
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) up --build -d sylius-static
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) build  proxy
