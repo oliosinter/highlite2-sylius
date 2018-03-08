@@ -1,0 +1,16 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block content %}
+    {% include '@SyliusShop/Product/Index/_header.html.twig' %}
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            {% include '@SyliusShop/Product/Index/_sidebar.html.twig' %}
+        </div>
+        <div class="twelve wide column">
+            {% include '@SyliusShop/Product/Index/_main.html.twig' %}
+        </div>
+    </div>
+
+    {{ render(url('sylius_shop_partial_taxon_index_by_code', {'code': 'category', 'template': '@SyliusShop/Taxon/_gridMenu.html.twig'})) }}
+
+{% endblock %}

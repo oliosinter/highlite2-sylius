@@ -13,6 +13,11 @@ parameters:
 
     secret: "%env(SYLIUS_SECRET)"
 
+    memcached_host: "%env(SYLIUS_MEMCACHED_HOST)%"
+    memcached_port: "%env(SYLIUS_MEMCACHED_PORT)%"
+    memcached_prefix: "%env(SYLIUS_MEMCACHED_PREFIX)%"
+    memcached_expire: "%env(SYLIUS_MEMCACHED_EXPIRE)%"
+
     # Fallback values (used if environmental variables are not set)
     env(SYLIUS_DATABASE_DRIVER): pdo_mysql
     env(SYLIUS_DATABASE_HOST): 127.0.0.1
@@ -27,3 +32,8 @@ parameters:
     env(SYLIUS_MAILER_PASSWORD): ~
 
     env(SYLIUS_SECRET): EDITME
+
+    env(SYLIUS_MEMCACHED_HOST): 127.0.0.1
+    env(SYLIUS_MEMCACHED_PORT): 11211
+    env(SYLIUS_MEMCACHED_PREFIX): highlite2_sylius_
+    env(SYLIUS_MEMCACHED_EXPIRE): 14400

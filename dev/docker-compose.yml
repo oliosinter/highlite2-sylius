@@ -1,0 +1,88 @@
+version: '2'
+
+volumes:
+
+  composer-cache:
+    external: true
+
+  codebase:
+    driver: local
+
+services:
+
+  sftp:
+    build:
+      context: .
+      dockerfile: sftp/Dockerfile
+    volumes:
+      - codebase:/home/dev/src
+    ports:
+      - "2222:22"
+    command: dev:dev:33:33:/src
+
+  sylius-php-fpm:
+    build:
+      context: ../
+      dockerfile: dev/php-fpm/Dockerfile
+    volumes:
+      - composer-cache:/cache/composer
+      - codebase:/var/www/html
+    links:
+      - sylius-mysql
+      - sylius-memcached
+    environment:
+      SYMFONY_ENV: "dev"
+      SYLIUS_APP_DEV_PERMITTED: 1
+      SYLIUS_DATABASE_HOST: "sylius-mysql"
+      SYLIUS_DATABASE_NAME: "sylius"
+      SYLIUS_DATABASE_PASSWORD: "sylius"
+      SYLIUS_DATABASE_USER: "sylius"
+      SYLIUS_MEMCACHED_HOST: "sylius-memcached"
+      SYLIUS_MEMCACHED_PORT: "11211"
+
+  sylius-mysql:
+    image: mysql:5.7
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "sylius"
+      MYSQL_DATABASE: "sylius"
+      MYSQL_USER: "sylius"
+      MYSQL_PASSWORD: "sylius"
+
+  sylius-memcached:
+    image: memcached:1.5
+    ports:
+      - "11211"
+
+  sylius-nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8888:80"
+    volumes:
+      - codebase:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+    links:
+      - sylius-php-fpm
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    volumes:
+      - codebase:/var/www/html
+
+  mysql-agent:
+    image: oliosinter/ansible-probe:1.0.0
+    links:
+      - sylius-mysql
+    environment:
+      PROBE_HOST: "sylius-mysql"
+      PROBE_PORT: "3306"
+      PROBE_TIMEOUT: 60
+    command: ["probe.yml"]

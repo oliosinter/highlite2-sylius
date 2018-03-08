@@ -1,0 +1,68 @@
+version: '2'
+
+volumes:
+
+  highlite2-sylius-media:
+    external: true
+
+  highlite2-sylius-mysql:
+    external: true
+
+services:
+
+  sylius-backend:
+    image: "highlite2/sylius-backend:${SYLIUS_DEPLOY_VERSION}"
+    links:
+      - mysql
+      - memcached
+    volumes:
+      - highlite2-sylius-media:/var/www/html/web/media
+    environment:
+      SYMFONY_ENV: "${SYLIUS_ENV}"
+      SYLIUS_DATABASE_HOST: "mysql"
+      SYLIUS_DATABASE_NAME: "${MYSQL_DATABASE_NAME}"
+      SYLIUS_DATABASE_PASSWORD: "${MYSQL_PASSWORD}"
+      SYLIUS_DATABASE_USER: "${MYSQL_USER}"
+      SYLIUS_MEMCACHED_HOST: "memcached"
+      SYLIUS_MEMCACHED_PORT: "11211"
+
+  sylius-static:
+    image: "highlite2/sylius-static:${SYLIUS_DEPLOY_VERSION}"
+    volumes:
+      - highlite2-sylius-media:/var/www/html/web/media
+
+  proxy:
+    build:
+      context: .
+      dockerfile: proxy/Dockerfile
+    ports:
+      - "80:80"
+
+  mysql-agent:
+    image: oliosinter/ansible-probe:1.0.0
+    links:
+      - mysql
+    environment:
+      PROBE_HOST: "mysql"
+      PROBE_PORT: "3306"
+      PROBE_TIMEOUT: 60
+
+  mysql:
+    image: mysql:5.7
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+    ports:
+      - "3306"
+    volumes:
+      - highlite2-sylius-mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE_NAME}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+
+  memcached:
+    image: memcached:1.5
+    ports:
+      - "11211"
