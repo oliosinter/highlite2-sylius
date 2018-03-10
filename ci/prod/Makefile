@@ -1,7 +1,9 @@
 PROD_PROJECT := $(PROJECT_NAME)-ci-prod
 PROD_COMPOSE_FILE := ci/prod/docker-compose.yml
 
-PROD_MYSQL_CONTAINER_ID = $(shell docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) ps -q mysql)
+ifeq (ci-prod-run,$(firstword $(MAKECMDGOALS)))
+  PROD_MYSQL_CONTAINER_ID = $(shell docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) ps -q mysql)
+endif
 
 .PHONY: ci-prod-run
 ci-prod-run:
