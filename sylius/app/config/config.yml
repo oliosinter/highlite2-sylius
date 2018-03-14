@@ -63,6 +63,13 @@ swiftmailer:
     host: "%mailer_host%"
     username: "%mailer_user%"
     password: "%mailer_password%"
+    port: "%mailer_port%"
+    encryption: "%mailer_encryption%"
+
+sylius_mailer:
+    sender:
+        name: Highlite Spb
+        address: no-reply@highlite-spb.ru
 
 fos_rest:
     exception: ~
