@@ -1,0 +1,16 @@
+{% block subject %}
+    Регистрация на {{ project_domain }}
+{% endblock %}
+
+{% block body %}
+    {% autoescape %}
+        <h3>Здравствуйте, {{ user.customer.firstName|default(user.username) }}!</h3>
+        Поздравляем с успешной регистрацией на <a target="_blank" href="{{ project_url }}">{{ project_name }}</a>.<br/><br/>
+        Если вы не проходили регистрацию, пожалуйста, просто проигнорируйте это письмо.
+
+        <br><br>
+        <span style="font-size:12px;color:#888">
+            Если у вас возникли какие-либо сложности или вопросы, обратитесь в службу поддержки <a href="mailto:{{ project_email_support }}" style="color:#444" target="_blank">{{ project_email_support }}</a>.
+        </span>
+    {% endautoescape %}
+{% endblock %}

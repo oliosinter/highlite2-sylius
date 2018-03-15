@@ -12,6 +12,18 @@ imports:
 
 parameters:
     locale: ru_RU
+    project_name: Highlite Spb
+    project_domain: highlite-spb.ru
+    project_url: http://highlite-spb.ru
+    project_email_support: support@highlite-spb.ru
+    project_email_robot: no-reply@highlite-spb.ru
+
+twig:
+    globals:
+        project_name: '%project_name%'
+        project_domain: '%project_domain%'
+        project_url: '%project_url%'
+        project_email_support: '%project_email_support%'
 
 framework:
     translator: { fallbacks: ["%locale%"] }
@@ -68,8 +80,8 @@ swiftmailer:
 
 sylius_mailer:
     sender:
-        name: Highlite Spb
-        address: no-reply@highlite-spb.ru
+        name: '%project_name%'
+        address: '%project_email_robot%'
 
 fos_rest:
     exception: ~

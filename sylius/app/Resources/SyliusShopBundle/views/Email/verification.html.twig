@@ -1,0 +1,19 @@
+{% block subject %}
+    Подтверждение адреса электронной почты на {{ project_domain }}
+{% endblock %}
+
+{% block body %}
+    {% set url = channel.hostname is not null ? 'http://' ~ channel.hostname ~ path('sylius_shop_user_verification', { 'token': user.emailVerificationToken}) : url('sylius_shop_user_verification', { 'token': user.emailVerificationToken}) %}
+    {% autoescape %}
+        <h3>Здравствуйте, {{ user.customer.firstName|default(user.username) }}!</h3>
+        Чтобы подтвердить адрес электронной почты на <a target="_blank" href="{{ project_url }}">{{ project_name }}</a>,
+        пожалуйста, перейдите по ссылке ниже.<br><br>
+
+        <a href="{{ url|raw }}">Подтвердить адрес.</a>
+
+        <br><br>
+        <span style="font-size:12px;color:#888">
+            Если у вас возникли какие-либо сложности или вопросы, обратитесь в службу поддержки <a href="mailto:{{ project_email_support }}" style="color:#444" target="_blank">{{ project_email_support }}</a>.
+        </span>
+    {% endautoescape %}
+{% endblock %}
