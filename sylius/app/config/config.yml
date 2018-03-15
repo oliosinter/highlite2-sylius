@@ -11,7 +11,7 @@ imports:
     - { resource: "security.yml" }
 
 parameters:
-    locale: en_US
+    locale: ru_RU
 
 framework:
     translator: { fallbacks: ["%locale%"] }
