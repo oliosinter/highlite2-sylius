@@ -1,0 +1,3 @@
+sylius:
+    ui:
+        checking_out_as: 'Вы вошли как'
