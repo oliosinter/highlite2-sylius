@@ -11,6 +11,11 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+// Not the best way to solve this issue, but...
+if ($_SERVER['HTTP_HOST'] != 'highlite-spb.ru') {
+    header('Location: http://highlite-spb.ru' . $_SERVER['REQUEST_URI'], 301);
+}
+
 /*
  * Sylius front controller.
  * Live (production) environment.
