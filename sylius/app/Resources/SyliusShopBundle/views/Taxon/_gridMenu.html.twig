@@ -19,7 +19,7 @@
     Каталог оборудования
 </h2>
 <div class="ui segment">
-    <div class="ui divided grid">
+    <div class="ui divided computer only grid">
         {% if taxons|length > 0 %}
             <div class="four column row">
                 <div class="column">
@@ -47,6 +47,17 @@
                             {{ macros.item(taxon) }}
                         {% endfor %}
                     {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="ui divided mobile only grid">
+        {% if taxons|length > 0 %}
+            <div class="one column row">
+                <div class="column">
+                    {% for taxon in taxons %}
+                        {{ macros.item(taxon) }}
+                    {% endfor %}
                 </div>
             </div>
         {% endif %}
