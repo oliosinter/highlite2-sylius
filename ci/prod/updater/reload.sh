@@ -9,8 +9,8 @@ LATEST_STATIC=`docker ps -f label=application=${LABEL_STATIC} -l --format "{{.Na
 PROXY=`docker ps -f label=application=${LABEL_PROXY} -l --format "{{.Names}}"`
 
 cat ci/build/proxy/_default.conf \
-   | sed "s/{backend}/${LATEST_BACKEND}/" \
-   | sed "s/{static}/${LATEST_STATIC}/" \
+   | sed "s/HIGHLITE2_SYLIUS_BACKEND/${LATEST_BACKEND}/" \
+   | sed "s/HIGHLITE2_SYLIUS_STATIC/${LATEST_STATIC}/" \
    > ci/build/proxy/default.conf
 
 docker cp ci/build/proxy/default.conf ${PROXY}:/etc/nginx/conf.d
