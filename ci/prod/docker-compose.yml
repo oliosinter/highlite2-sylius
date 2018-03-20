@@ -35,11 +35,12 @@ services:
       - highlite2-sylius-media:/var/www/html/web/media
 
   proxy:
-    build:
-      context: .
-      dockerfile: proxy/Dockerfile
+    image: nginx:1.13
     ports:
       - "80:80"
+    labels:
+      application: "highlite2-sylius"
+      service: "proxy"
 
   mysql-agent:
     image: oliosinter/ansible-probe:1.0.0
