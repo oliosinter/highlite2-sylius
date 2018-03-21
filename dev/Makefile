@@ -24,7 +24,7 @@ dev-restart:
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build --pull sylius-php-fpm
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build sylius-nginx
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build sftp
-	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up -d sylius-nginx
+	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up --force-recreate -d sylius-nginx
 	docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up -d sftp
 
 .PHONY: dev-start
