@@ -1,6 +1,6 @@
 ## Highlite Spb
 
-[Highlite Spb](http://highlite-spb.ru) is a show equipment store. It is a eCommerce project, consisting of two parts:
+[Highlite Spb](http://highlite-spb.ru) is a show equipment store. It is a eCommerce project, consisting of following parts:
 - [highlite2-sylius](https://github.com/oliosinter/highlite2-sylius) - online store, based on [Sylius](https://sylius.com) eCommerce framework;
 - [highlite2-import](https://github.com/oliosinter/highlite2-import) - product import tool, written in Golang;
 - [highlite2-jenkins](https://github.com/oliosinter/highlite2-jenkins) - continuous delivery.
