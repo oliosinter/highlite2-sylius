@@ -12,12 +12,6 @@
     {% block metatags %}
     {% endblock %}
 
-    {% block stylesheets %}
-        {% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'assets/shop/css/style.css'} %}
-
-        {{ sonata_block_render_event('sylius.shop.layout.stylesheets') }}
-    {% endblock %}
-
     {{ sonata_block_render_event('sylius.shop.layout.head') }}
 </head>
 
@@ -65,13 +59,20 @@
     {% endblock %}
 </div>
 
+{% include '@SyliusUi/Modal/_confirmation.html.twig' %}
+{{ sonata_block_render_event('sylius.shop.layout.after_body') }}
+
+{% block stylesheets %}
+    {% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'assets/shop/css/style.css'} %}
+
+    {{ sonata_block_render_event('sylius.shop.layout.stylesheets') }}
+{% endblock %}
+
 {% block javascripts %}
     {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
 
     {{ sonata_block_render_event('sylius.shop.layout.javascripts') }}
 {% endblock %}
 
-{% include '@SyliusUi/Modal/_confirmation.html.twig' %}
-{{ sonata_block_render_event('sylius.shop.layout.after_body') }}
 </body>
 </html>
