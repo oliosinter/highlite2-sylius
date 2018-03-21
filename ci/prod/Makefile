@@ -4,7 +4,7 @@ PROD_COMPOSE_FILE := ci/prod/docker-compose.yml
 PROD_SCALE_UP := 2
 PROD_SCALE_DOWN := 1
 
-ifeq (ci-prod-run,$(firstword $(MAKECMDGOALS)))
+ifeq (ci-prod-deploy,$(firstword $(MAKECMDGOALS)))
   PROD_MYSQL_CONTAINER_ID = $(shell docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) ps -q mysql)
 endif
 
