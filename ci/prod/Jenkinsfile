@@ -3,7 +3,7 @@ node {
 
     stage ('Application deploy') {
         withEnv(["SYLIUS_DEPLOY_VERSION=${VERSION}", "SYLIUS_ENV=${ENV}"]) {
-            sh 'make ci-prod-run'
+            sh 'make ci-prod-deploy'
         }
     }
 }

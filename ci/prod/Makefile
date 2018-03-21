@@ -8,8 +8,8 @@ ifeq (ci-prod-run,$(firstword $(MAKECMDGOALS)))
   PROD_MYSQL_CONTAINER_ID = $(shell docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) ps -q mysql)
 endif
 
-.PHONY: ci-prod-run
-ci-prod-run:
+.PHONY: ci-prod-deploy
+ci-prod-deploy:
 	docker volume create --name highlite2-sylius-media
 	docker volume create --name highlite2-sylius-mysql
 	docker-compose -p $(PROD_PROJECT) -f $(PROD_COMPOSE_FILE) run --rm mysql-agent
