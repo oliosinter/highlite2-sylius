@@ -11,10 +11,11 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-if ($_SERVER['HTTP_HOST'] != 'highlite-spb.ru') {
-    header('Location: http://highlite-spb.ru' . $_SERVER['REQUEST_URI'], 301);
-    die;
-}
+// TODO uncomment this after domain works are done
+//if ($_SERVER['HTTP_HOST'] != 'highlite-spb.ru') {
+//    header('Location: http://highlite-spb.ru' . $_SERVER['REQUEST_URI'], 301);
+//    die;
+//}
 
 /*
  * Sylius front controller.
