@@ -2,7 +2,13 @@ node {
     checkout scm
 
     stage ('Application deploy') {
-        withEnv(["SYLIUS_DEPLOY_VERSION=${VERSION}", "SYLIUS_ENV=${ENV}"]) {
+        withEnv([
+           "SYLIUS_DEPLOY_VERSION=${VERSION}",
+           "SYLIUS_ENV=${ENV}",
+           "SYLIUS_MAILER_HOST=${SYLIUS_MAILER_HOST}",
+           "SYLIUS_MAILER_USER=${SYLIUS_MAILER_USER}",
+           "SYLIUS_MAILER_PASSWORD=${SYLIUS_MAILER_PASSWORD}"
+        ]) {
             sh 'make ci-prod-deploy'
         }
     }
