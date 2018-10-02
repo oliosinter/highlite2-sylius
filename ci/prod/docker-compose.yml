@@ -14,7 +14,6 @@ services:
     image: "highlite2/sylius-backend:${SYLIUS_DEPLOY_VERSION}"
     links:
       - mysql
-      - memcached
     volumes:
       - highlite2-sylius-media:/var/www/html/web/media
     environment:
@@ -65,8 +64,3 @@ services:
       MYSQL_DATABASE: "${MYSQL_DATABASE_NAME}"
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-
-  memcached:
-    image: memcached:1.5
-    ports:
-      - "32773:11211"

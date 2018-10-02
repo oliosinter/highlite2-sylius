@@ -38,20 +38,9 @@ framework:
     default_locale: "%locale%"
     trusted_proxies: ~
     session:
-        handler_id: session.handler.memcached
+        handler_id: ~
     assets:
         json_manifest_path: "%kernel.root_dir%/rev-manifest.json"
-
-services:
-    session.handler.memcached:
-        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
-        arguments: [ "@session.memcached", { prefix: '%memcached_prefix%', expiretime: '%memcached_expire%' } ]
-    session.memcached:
-        class: Memcached
-        arguments:
-            - '%memcached_prefix%'
-        calls:
-            - [ addServer, [ %memcached_host%, %memcached_port% ]]
 
 doctrine:
     dbal:
